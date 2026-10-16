@@ -15,7 +15,7 @@ jobs:
       - name: Download APK from release
         run: gh release download v0.2.0 --pattern "*.apk" --repo ${{ github.repository }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}pixel_8pixel_8
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
