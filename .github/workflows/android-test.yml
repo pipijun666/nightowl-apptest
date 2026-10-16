@@ -15,7 +15,7 @@ jobs:
       - name: Download APK from release
         run: gh release download v0.2.0 --pattern "*.apk" --repo ${{ github.repository }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}pixel_8pixel_8
 
       - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
@@ -23,7 +23,7 @@ jobs:
           api-level: 35
           target: google_apis
           arch: x86_64
-          profile: pixel_8
+          profile: pixel_7
           script: |
             APK=$(ls *.apk | head -1)
             adb install "$APK"
