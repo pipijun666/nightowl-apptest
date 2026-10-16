@@ -7,7 +7,7 @@ on:
 
 jobs:
   android-test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
       - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: 34
           target: google_apis
           arch: x86_64
           profile: pixel_7
