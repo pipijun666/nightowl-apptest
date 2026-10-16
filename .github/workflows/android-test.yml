@@ -1,0 +1,41 @@
+name: Android Cloud Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  android-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download APK from release
+        run: gh release download v0.2.0 --pattern "*.apk" --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run tests on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_8
+          script: |
+            APK=$(ls *.apk | head -1)
+            adb install "$APK"
+            adb shell monkey -p com.opencami.camiapp --throttle 200 1000
+            adb logcat -d > logcat.txt
+            adb exec-out screencap -p > screenshot.png
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            logcat.txt
+            screenshot.png
