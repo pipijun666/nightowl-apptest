@@ -22,7 +22,7 @@ jobs:
         with:
           api-level: 34
           target: google_apis
-          arch: x86_64
+          arch: arm64-v8a
           profile: pixel_7
           script: |
             APK=$(ls *.apk | head -1)
